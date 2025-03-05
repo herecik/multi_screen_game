@@ -1,16 +1,14 @@
 #include "main.h"
 
 
-typedef struct Window{
-    float Width = 1200.f;
-    float Height = 800.f;
-} Window;
 
 
 
 int main(){
     //creatre gamne window
     Window MainWindow;
+    MainWindow.Height = 800.f;
+    MainWindow.Width = 1200.f;
     InitWindow(MainWindow.Width, MainWindow.Height, "Game");
     //init player character
     Vector2 CharVelocity{0,0}; 
@@ -55,7 +53,7 @@ int main(){
 
 
 
-
+        WindowBorderTrigger(MainWindow, Player);
 
         EndDrawing();
     }
@@ -83,4 +81,11 @@ void MovePlayer(Character* player, float dT){
     if(IsKeyDown(KEY_S)){
         player->Move({0,velocity}, dT);
     }
+}
+
+void WindowBorderTrigger(Window mainWindow, Character* player){
+    if(mainWindow.Width < player->Pos.x){
+        cout << "BINGO" << endl;
+    }
+    
 }
