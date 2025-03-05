@@ -23,3 +23,14 @@ class Projectile : public Character{
     
 };
 
+class Level{
+    public:
+    int LevelId;
+    Texture2D LevelBackground;
+
+    
+    
+
+    Level(int id, Texture2D background);
+};
+

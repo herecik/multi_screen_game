@@ -6,6 +6,8 @@ int main(){
     MainWindow.Height = 800.f;
     MainWindow.Width = 1200.f;
     InitWindow(MainWindow.Width, MainWindow.Height, "Game");
+    //InitLevels
+    Level *Level1 = new Level(1, LoadTexture("textures/bcg1.png"));
     //init player character
     Vector2 CharVelocity{0,0}; 
     Character* Player = new Character({MainWindow.Width/2, MainWindow.Height/2},{0,0,50,50},CharVelocity);
@@ -14,11 +16,16 @@ int main(){
 
     SetTargetFPS(60);
     while(!WindowShouldClose()){
+
+
         float dT = GetFrameTime();
         BeginDrawing();
         ClearBackground(GRAY);
+        DrawBackgroundLevel(Level1);
     
         DrawRectangle(Player->Pos.x, Player->Pos.y, Player->Rec.width, Player->Rec.height, RED);
+
+
 
         //Player movement
         MovePlayer(Player, dT);
@@ -37,7 +44,6 @@ int main(){
             Proj->Move({100,50},dT);
         }
         
-        
         //mouse position TBD, need for shooting
         int x = GetMouseX();
         int y = GetMouseY();
@@ -46,9 +52,6 @@ int main(){
         cout << "klik na X: " << x << endl << "Klik na Y: " << y << endl;
         }
         
-
-
-
         WindowBorderTrigger(MainWindow, Player);
 
         EndDrawing();
@@ -57,9 +60,24 @@ int main(){
     delete Proj;
     CloseWindow();
     
-   
     return 0;
+}
 
+void InitLevels(){
+    
+}
+
+void DrawBackgroundLevel(Level* level){
+
+    switch (level->LevelId)
+    {
+    case  1:
+        DrawTexture(level->LevelBackground, 0, 0, WHITE);
+        break;
+    
+    default:
+        break;
+    }
 }
 
 void MovePlayer(Character* player, float dT){
