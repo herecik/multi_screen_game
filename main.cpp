@@ -31,10 +31,15 @@ int main(){
         //Player shooting
         if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !Proj->Exists){
             Proj->Exists = true;
+            Vector2 positionOfPlayerCentre = Player->GetCentre(Player->Rec, Player->Pos);
+            //set up spawn coordonates of projectile
+            Proj->Pos.x = positionOfPlayerCentre.x;
+            Proj->Pos.y = positionOfPlayerCentre.y;
             cout << "ok" << endl;
         }
         if(Proj->Exists){
-            DrawRectangle(Proj->Pos.x, Proj->Pos.y,Proj->Rec.width, Proj->Rec.height, BLUE);
+           
+            DrawRectangle(Proj->Pos.x,Proj->Pos.y,Proj->Rec.width, Proj->Rec.height, BLUE);
             Proj->Move({100,50},dT);
         }
         
