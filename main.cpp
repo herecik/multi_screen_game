@@ -2,8 +2,8 @@
 
 
 typedef struct Window{
-    int Width = 1200;
-    int Height = 800;
+    float Width = 1200.f;
+    float Height = 800.f;
 } Window;
 
 
