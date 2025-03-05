@@ -16,15 +16,14 @@ int main(){
     Vector2 CharVelocity{0,0}; 
     Character* Player = new Character({MainWindow.Width/2, MainWindow.Height/2},{0,0,50,50},CharVelocity);
 
-    Projectile* Proj = new Projectile({100,100},{0,0,10,10},{0,0});
+    Projectile* Proj = new Projectile(Player->GetCentre(Player->Rec, Player->Pos),{0,0,10,10},{0,0});
 
     SetTargetFPS(60);
     while(!WindowShouldClose()){
         float dT = GetFrameTime();
         BeginDrawing();
         ClearBackground(GRAY);
-        
-
+    
         DrawRectangle(Player->Pos.x, Player->Pos.y, Player->Rec.width, Player->Rec.height, RED);
 
         //Player movement
@@ -40,10 +39,15 @@ int main(){
         }
         
         
-        /*mouse position int x = GetMouseX();
+        //mouse position 
+        int x = GetMouseX();
         int y = GetMouseY();
-        cout << "klik na X: " << x << endl << "Klik na Y: " << y << endl;*/
-    
+
+        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        cout << "klik na X: " << x << endl << "Klik na Y: " << y << endl;
+        }
+        
+
 
 
 

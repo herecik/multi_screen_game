@@ -8,6 +8,7 @@ class Character{
     Vector2 Velocity;
 
     Character(Vector2 pos, Rectangle rec, Vector2 velocity);
+    Vector2 GetCentre(Rectangle rec, Vector2 pos);
     void Move(Vector2 velocities, float dT);
     
 };

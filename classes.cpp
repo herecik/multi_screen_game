@@ -6,3 +6,12 @@ void Character::Move(Vector2 velocities, float dT){
     Pos.x += velocities.x * dT;
     Pos.y += velocities.y * dT;
 }
+
+Vector2 Character::GetCentre(Rectangle rec, Vector2 pos){
+    Vector2 result;
+    result.x = pos.x + (rec.width / 2);
+    result.y = pos.y + (rec.height / 2);
+
+    return result;
+
+}
