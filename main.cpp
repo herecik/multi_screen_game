@@ -1,9 +1,5 @@
 #include "main.h"
 
-
-
-
-
 int main(){
     //creatre gamne window
     Window MainWindow;
@@ -42,7 +38,7 @@ int main(){
         }
         
         
-        //mouse position 
+        //mouse position TBD, need for shooting
         int x = GetMouseX();
         int y = GetMouseY();
 
@@ -70,7 +66,6 @@ void MovePlayer(Character* player, float dT){
     float velocity = 200;
     if(IsKeyDown(KEY_A)){
         player->Move({-200,0}, dT);
-        cout << "ok" << endl;
     }
     if(IsKeyDown(KEY_D)){
         player->Move({velocity,0}, dT);
@@ -84,8 +79,20 @@ void MovePlayer(Character* player, float dT){
 }
 
 void WindowBorderTrigger(Window mainWindow, Character* player){
+    //Right border
     if(mainWindow.Width < player->Pos.x){
         cout << "BINGO" << endl;
     }
-    
+    //Left Border
+    if(0 > player->Pos.x + player->Rec.width){
+        cout << "BINGO" << endl;
+    }
+    //Upper border
+    if(0 > player->Pos.y + player->Rec.height){
+        cout << "BINGO" << endl;
+    }
+    //Bottom border
+    if(mainWindow.Height < player->Pos.y){
+        cout << "BINGO" << endl;
+    }
 }
