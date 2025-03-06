@@ -5,8 +5,7 @@ int main(){
     Window* MainWindow = new Window();
     
     //InitLevels
-    Level *Level1 = new Level(1, LoadTexture("textures/bcg1.png"));
-    Level *Level2 = new Level(2, LoadTexture("textures/bcg2.png"));
+    
     //init player character
     Vector2 CharVelocity{0,0}; 
     Character* Player = new Character({MainWindow->Width/2, MainWindow->Height/2},{0,0,50,50},CharVelocity);
@@ -20,20 +19,8 @@ int main(){
         float dT = GetFrameTime();
         BeginDrawing();
         ClearBackground(GRAY);
-        
+        DrawBackgroundLevel(MainWindow);
 
-        switch (MainWindow->ActiveLevel)
-        {
-        case 1:
-            DrawBackgroundLevel(Level1);
-            break;
-        case 2:
-            DrawBackgroundLevel(Level2);
-            break;
-        
-        default:
-            break;
-        }
         
     
         DrawRectangle(Player->Pos.x, Player->Pos.y, Player->Rec.width, Player->Rec.height, RED);
@@ -65,14 +52,13 @@ int main(){
         cout << "klik na X: " << x << endl << "Klik na Y: " << y << endl;
         }
         
-        WindowBorderTrigger(MainWindow, Player, Level1);
+        WindowBorderTrigger(MainWindow, Player);
 
         EndDrawing();
     }
     delete Player;
     delete Proj;
     delete MainWindow;
-    delete Level1;
     CloseWindow();
     
     return 0;
@@ -82,21 +68,28 @@ void InitLevels(){
     
 }
 
-void DrawBackgroundLevel(Level* level){
-    DrawTexture(level->LevelBackground, 0, 0, WHITE);
+void DrawBackgroundLevel(Window* MainWindow){
+    Level *Level1 = new Level(1, LoadTexture("textures/bcg1.png"));
+    Level *Level2 = new Level(2, LoadTexture("textures/bcg2.png"));
+    //DrawTexture(Level1->LevelBackground, 0, 0, WHITE);
 
     //switch prepared to the future
-    /*switch (level->LevelId)
+    switch (MainWindow->ActiveLevel)
     {
     case  1:
-        cout << "LevelId: " << level->LevelId << endl;
+        DrawTexture(Level1->LevelBackground, 0, 0, WHITE);
+        cout << "LevelId: " << Level1->LevelId << endl;
         break;
     case 2:
-        cout << "LevelId: " << level->LevelId << endl;
+        DrawTexture(Level2->LevelBackground, 0, 0, WHITE); 
+        cout << "LevelId: " << Level2->LevelId << endl;
 
     default:
         break;
-    }*/
+    }
+
+    delete Level1;
+    delete Level2;
 }
 
 void MovePlayer(Character* player, float dT){
@@ -115,7 +108,7 @@ void MovePlayer(Character* player, float dT){
     }
 }
 
-void WindowBorderTrigger(Window* mainWindow, Character* player, Level *level){
+void WindowBorderTrigger(Window* mainWindow, Character* player){
     //Right border
     if(mainWindow->Width < player->Pos.x){
         cout << "BINGO" << endl;
