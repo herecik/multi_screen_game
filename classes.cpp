@@ -6,6 +6,7 @@ Level::Level(int id, Texture2D background) : LevelId(id), LevelBackground(backgr
 Window::Window(){
     Width = 1200.f;
     Height = 800.f;
+    ActiveLevel = 1;
     InitWindow(Width, Height, "Main Window");
 }
 

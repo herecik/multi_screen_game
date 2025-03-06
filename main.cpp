@@ -6,6 +6,7 @@ int main(){
     
     //InitLevels
     Level *Level1 = new Level(1, LoadTexture("textures/bcg1.png"));
+    Level *Level2 = new Level(2, LoadTexture("textures/bcg2.png"));
     //init player character
     Vector2 CharVelocity{0,0}; 
     Character* Player = new Character({MainWindow->Width/2, MainWindow->Height/2},{0,0,50,50},CharVelocity);
@@ -19,7 +20,21 @@ int main(){
         float dT = GetFrameTime();
         BeginDrawing();
         ClearBackground(GRAY);
-        DrawBackgroundLevel(Level1);
+        
+
+        switch (MainWindow->ActiveLevel)
+        {
+        case 1:
+            DrawBackgroundLevel(Level1);
+            break;
+        case 2:
+            DrawBackgroundLevel(Level2);
+            break;
+        
+        default:
+            break;
+        }
+        
     
         DrawRectangle(Player->Pos.x, Player->Pos.y, Player->Rec.width, Player->Rec.height, RED);
 
@@ -71,7 +86,7 @@ void DrawBackgroundLevel(Level* level){
     DrawTexture(level->LevelBackground, 0, 0, WHITE);
 
     //switch prepared to the future
-    switch (level->LevelId)
+    /*switch (level->LevelId)
     {
     case  1:
         cout << "LevelId: " << level->LevelId << endl;
@@ -81,7 +96,7 @@ void DrawBackgroundLevel(Level* level){
 
     default:
         break;
-    }
+    }*/
 }
 
 void MovePlayer(Character* player, float dT){
@@ -104,7 +119,7 @@ void WindowBorderTrigger(Window* mainWindow, Character* player, Level *level){
     //Right border
     if(mainWindow->Width < player->Pos.x){
         cout << "BINGO" << endl;
-        level->LevelId = 2;
+        mainWindow->ActiveLevel = 2;
         //here ve load texture level->LevelBackground 
     }
     //Left Border

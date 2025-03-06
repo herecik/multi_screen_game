@@ -38,5 +38,6 @@ class Window{
     public:
     float Height;
     float Width;
+    int ActiveLevel;
     Window();
 };
