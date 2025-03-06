@@ -12,7 +12,7 @@ void MovePlayer(Character* player, float dT);
 
 //Function that triggers if player passes the borders of game window
 //triggers only if the player is no longer visible
-void WindowBorderTrigger(Window mainWindow, Character* player);
+void WindowBorderTrigger(Window mainWindow, Character* player, Level* level);
 //Prepares all levels
 void InitLevels();
 //Draws background for specified level

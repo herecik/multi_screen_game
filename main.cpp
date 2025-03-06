@@ -8,7 +8,6 @@ int main(){
     InitWindow(MainWindow.Width, MainWindow.Height, "Game");
     //InitLevels
     Level *Level1 = new Level(1, LoadTexture("textures/bcg1.png"));
-    Level *Level2 = new Level(2, LoadTexture("textures/bcg1.png"));
     //init player character
     Vector2 CharVelocity{0,0}; 
     Character* Player = new Character({MainWindow.Width/2, MainWindow.Height/2},{0,0,50,50},CharVelocity);
@@ -53,7 +52,7 @@ int main(){
         cout << "klik na X: " << x << endl << "Klik na Y: " << y << endl;
         }
         
-        WindowBorderTrigger(MainWindow, Player);
+        WindowBorderTrigger(MainWindow, Player, Level1);
 
         EndDrawing();
     }
@@ -99,10 +98,12 @@ void MovePlayer(Character* player, float dT){
     }
 }
 
-void WindowBorderTrigger(Window mainWindow, Character* player){
+void WindowBorderTrigger(Window mainWindow, Character* player, Level *level){
     //Right border
     if(mainWindow.Width < player->Pos.x){
         cout << "BINGO" << endl;
+        level->LevelId = 2;
+        //here ve load texture level->LevelBackground 
     }
     //Left Border
     if(0 > player->Pos.x + player->Rec.width){
