@@ -9,7 +9,8 @@ int main(){
     //init player character
     Vector2 CharVelocity{0,0}; 
     Character* Player = new Character({MainWindow->Width/2, MainWindow->Height/2},{0,0,50,50},CharVelocity);
-
+    Level *Level1 = new Level(1, LoadTexture("textures/bcg1.png"));
+    Level *Level2 = new Level(2, LoadTexture("textures/bcg2.png"));
     Projectile* Proj = new Projectile(Player->GetCentre(Player->Rec, Player->Pos),{0,0,10,10},{0,0});
 
     SetTargetFPS(60);
@@ -19,9 +20,17 @@ int main(){
         float dT = GetFrameTime();
         BeginDrawing();
         ClearBackground(GRAY);
-        DrawBackgroundLevel(MainWindow);
 
-        
+        switch (MainWindow->ActiveLevel)
+        {
+        case  1:
+            DrawTexture(Level1->LevelBackground, 0, 0, WHITE);
+            break;
+        case 2:
+            DrawTexture(Level2->LevelBackground, 0, 0, WHITE); 
+        default:
+            break;
+        }
     
         DrawRectangle(Player->Pos.x, Player->Pos.y, Player->Rec.width, Player->Rec.height, RED);
 
@@ -59,37 +68,11 @@ int main(){
     delete Player;
     delete Proj;
     delete MainWindow;
+    delete Level1;
+    delete Level2;
     CloseWindow();
     
     return 0;
-}
-
-void InitLevels(){
-    
-}
-
-void DrawBackgroundLevel(Window* MainWindow){
-    Level *Level1 = new Level(1, LoadTexture("textures/bcg1.png"));
-    Level *Level2 = new Level(2, LoadTexture("textures/bcg2.png"));
-    //DrawTexture(Level1->LevelBackground, 0, 0, WHITE);
-
-    //switch prepared to the future
-    switch (MainWindow->ActiveLevel)
-    {
-    case  1:
-        DrawTexture(Level1->LevelBackground, 0, 0, WHITE);
-        cout << "LevelId: " << Level1->LevelId << endl;
-        break;
-    case 2:
-        DrawTexture(Level2->LevelBackground, 0, 0, WHITE); 
-        cout << "LevelId: " << Level2->LevelId << endl;
-
-    default:
-        break;
-    }
-
-    delete Level1;
-    delete Level2;
 }
 
 void MovePlayer(Character* player, float dT){
@@ -113,18 +96,23 @@ void WindowBorderTrigger(Window* mainWindow, Character* player){
     if(mainWindow->Width < player->Pos.x){
         cout << "BINGO" << endl;
         mainWindow->ActiveLevel = 2;
+        //move player to the right spot on the new window
+        player->Pos = {0,player->Pos.y};
         //here ve load texture level->LevelBackground 
     }
     //Left Border
     if(0 > player->Pos.x + player->Rec.width){
         cout << "BINGO" << endl;
+        player->Pos = {mainWindow->Width - player->Rec.width, player->Pos.y};
     }
     //Upper border
     if(0 > player->Pos.y + player->Rec.height){
         cout << "BINGO" << endl;
+        player->Pos = {player->Pos.x, mainWindow->Height - player->Rec.height};
     }
     //Bottom border
     if(mainWindow->Height < player->Pos.y){
         cout << "BINGO" << endl;
+        player->Pos = {player->Pos.x, 0};
     }
 }
