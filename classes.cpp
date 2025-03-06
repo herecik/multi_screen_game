@@ -3,6 +3,12 @@
 Character::Character(Vector2 pos, Rectangle rec, Vector2 velocity ) : Pos(pos), Rec(rec), Velocity(velocity) {};
 Level::Level(int id, Texture2D background) : LevelId(id), LevelBackground(background) {};
 
+Window::Window(){
+    Width = 1200.f;
+    Height = 800.f;
+    InitWindow(Width, Height, "Main Window");
+}
+
 void Character::Move(Vector2 velocities, float dT){
     Pos.x += velocities.x * dT;
     Pos.y += velocities.y * dT;

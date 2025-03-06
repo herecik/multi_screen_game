@@ -2,15 +2,13 @@
 
 int main(){
     //creatre gamne window
-    Window MainWindow;
-    MainWindow.Height = 800.f;
-    MainWindow.Width = 1200.f;
-    InitWindow(MainWindow.Width, MainWindow.Height, "Game");
+    Window* MainWindow = new Window();
+    
     //InitLevels
     Level *Level1 = new Level(1, LoadTexture("textures/bcg1.png"));
     //init player character
     Vector2 CharVelocity{0,0}; 
-    Character* Player = new Character({MainWindow.Width/2, MainWindow.Height/2},{0,0,50,50},CharVelocity);
+    Character* Player = new Character({MainWindow->Width/2, MainWindow->Height/2},{0,0,50,50},CharVelocity);
 
     Projectile* Proj = new Projectile(Player->GetCentre(Player->Rec, Player->Pos),{0,0,10,10},{0,0});
 
@@ -58,6 +56,8 @@ int main(){
     }
     delete Player;
     delete Proj;
+    delete MainWindow;
+    delete Level1;
     CloseWindow();
     
     return 0;
@@ -69,6 +69,8 @@ void InitLevels(){
 
 void DrawBackgroundLevel(Level* level){
     DrawTexture(level->LevelBackground, 0, 0, WHITE);
+
+    //switch prepared to the future
     switch (level->LevelId)
     {
     case  1:
@@ -98,9 +100,9 @@ void MovePlayer(Character* player, float dT){
     }
 }
 
-void WindowBorderTrigger(Window mainWindow, Character* player, Level *level){
+void WindowBorderTrigger(Window* mainWindow, Character* player, Level *level){
     //Right border
-    if(mainWindow.Width < player->Pos.x){
+    if(mainWindow->Width < player->Pos.x){
         cout << "BINGO" << endl;
         level->LevelId = 2;
         //here ve load texture level->LevelBackground 
@@ -114,7 +116,7 @@ void WindowBorderTrigger(Window mainWindow, Character* player, Level *level){
         cout << "BINGO" << endl;
     }
     //Bottom border
-    if(mainWindow.Height < player->Pos.y){
+    if(mainWindow->Height < player->Pos.y){
         cout << "BINGO" << endl;
     }
 }

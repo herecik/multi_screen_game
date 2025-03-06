@@ -33,4 +33,10 @@ class Level{
 
     Level(int id, Texture2D background);
 };
-
+//class for main game window
+class Window{
+    public:
+    float Height;
+    float Width;
+    Window();
+};
