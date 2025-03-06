@@ -8,6 +8,7 @@ int main(){
     InitWindow(MainWindow.Width, MainWindow.Height, "Game");
     //InitLevels
     Level *Level1 = new Level(1, LoadTexture("textures/bcg1.png"));
+    Level *Level2 = new Level(2, LoadTexture("textures/bcg1.png"));
     //init player character
     Vector2 CharVelocity{0,0}; 
     Character* Player = new Character({MainWindow.Width/2, MainWindow.Height/2},{0,0,50,50},CharVelocity);
@@ -68,13 +69,15 @@ void InitLevels(){
 }
 
 void DrawBackgroundLevel(Level* level){
-
+    DrawTexture(level->LevelBackground, 0, 0, WHITE);
     switch (level->LevelId)
     {
     case  1:
-        DrawTexture(level->LevelBackground, 0, 0, WHITE);
+        cout << "LevelId: " << level->LevelId << endl;
         break;
-    
+    case 2:
+        cout << "LevelId: " << level->LevelId << endl;
+
     default:
         break;
     }
