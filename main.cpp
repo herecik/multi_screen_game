@@ -3,6 +3,7 @@
 int main(){
     //creatre gamne window
     Window* MainWindow = new Window();
+    float counter = 0;
     
     //InitLevels
     
@@ -39,17 +40,9 @@ int main(){
         //Player movement
         Player->Move(dT);
         
-        
-        //mouse position TBD, need for shooting
-        int x = GetMouseX();
-        int y = GetMouseY();
-
-        if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-        cout << "klik na X: " << x << endl << "Klik na Y: " << y << endl;
-        }
-        
         WindowBorderTrigger(MainWindow, Player);
-
+        counter += dT;
+        cout << counter << endl;
         EndDrawing();
     }
     delete Player;
@@ -61,22 +54,6 @@ int main(){
     
     return 0;
 }
-
-/*void MovePlayer(Character* player, float dT){
-    float velocity = 200;
-    if(IsKeyDown(KEY_A)){
-        player->Move({-200,0}, dT);
-    }
-    if(IsKeyDown(KEY_D)){
-        player->Move({velocity,0}, dT);
-    }
-    if(IsKeyDown(KEY_W)){
-        player->Move({0,-velocity}, dT);
-    }
-    if(IsKeyDown(KEY_S)){
-        player->Move({0,velocity}, dT);
-    }
-}*/
 
 void WindowBorderTrigger(Window* mainWindow, Character* player){
     //Right border

@@ -35,25 +35,26 @@ void Character::ChangePosition(float dT){
 }
 
 void Character::Shoot(Projectile *proj, float dT){
+
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !proj->Exists){
         proj->Exists = true;
         Vector2 positionOfPlayerCentre = GetCentre(Rec, Pos);
 
-        // Nastavení počáteční pozice střely
+        // spawn projectile on the center of player
         proj->Pos = positionOfPlayerCentre;
 
-        // Výpočet směru střely k myši
+        // direction to the mouse
         Vector2 mousePos = GetMousePosition();
         Vector2 direction = {mousePos.x - proj->Pos.x, mousePos.y - proj->Pos.y};
         float length = sqrt(direction.x * direction.x + direction.y * direction.y);
 
-        // Normalizace směru
+        // Normal
         if (length != 0) {
             direction.x /= length;
             direction.y /= length;
         }
 
-        // Nastavení konstantního směru střely
+        // direction of the projectile
         proj->ProjectileVelocity = {direction.x * proj->Speed, direction.y * proj->Speed};
     }
 
@@ -61,8 +62,14 @@ void Character::Shoot(Projectile *proj, float dT){
         proj->Pos.x += proj->ProjectileVelocity.x * dT;
         proj->Pos.y += proj->ProjectileVelocity.y * dT;
 
-        // Vykreslení projektilu
+        // Draw the projectile 
         DrawRectangle(proj->Pos.x, proj->Pos.y, proj->Rec.width, proj->Rec.height, BLUE);
+        proj->AliveTimer += dT;
+    }
+    if(proj->AliveTimer >= proj->ProjectileTime){
+        proj->Exists = false;
+        proj->AliveTimer = 0.f;
+        proj->Pos = {0,0};
     }
 }
 

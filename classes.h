@@ -25,6 +25,8 @@ class Character{
 class Projectile : public Character{
     public:
     bool Exists = false;
+    float ProjectileTime = 2.f;
+    float AliveTimer = 0.f;
     Vector2 ProjectileVelocity = {0,0};
 
 
