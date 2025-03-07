@@ -94,7 +94,6 @@ void MovePlayer(Character* player, float dT){
 void WindowBorderTrigger(Window* mainWindow, Character* player){
     //Right border
     if(mainWindow->Width < player->Pos.x){
-        cout << "BINGO" << endl;
         mainWindow->ActiveLevel = 2;
         //move player to the right spot on the new window
         player->Pos = {0,player->Pos.y};
@@ -102,17 +101,15 @@ void WindowBorderTrigger(Window* mainWindow, Character* player){
     }
     //Left Border
     if(0 > player->Pos.x + player->Rec.width){
-        cout << "BINGO" << endl;
+        mainWindow->ActiveLevel = 1;
         player->Pos = {mainWindow->Width - player->Rec.width, player->Pos.y};
     }
     //Upper border
     if(0 > player->Pos.y + player->Rec.height){
-        cout << "BINGO" << endl;
         player->Pos = {player->Pos.x, mainWindow->Height - player->Rec.height};
     }
     //Bottom border
     if(mainWindow->Height < player->Pos.y){
-        cout << "BINGO" << endl;
         player->Pos = {player->Pos.x, 0};
     }
 }
