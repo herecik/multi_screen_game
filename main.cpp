@@ -7,11 +7,10 @@ int main(){
     //InitLevels
     
     //init player character
-    Vector2 CharVelocity{0,0}; 
-    Character* Player = new Character({MainWindow->Width/2, MainWindow->Height/2},{0,0,50,50},CharVelocity);
+    Character* Player = new Character({MainWindow->Width/2, MainWindow->Height/2},{0,0,50,50}, 200.f);
     Level *Level1 = new Level(1, LoadTexture("textures/bcg1.png"));
     Level *Level2 = new Level(2, LoadTexture("textures/bcg2.png"));
-    Projectile* Proj = new Projectile(Player->GetCentre(Player->Rec, Player->Pos),{0,0,10,10},{0,0});
+    Projectile* Proj = new Projectile({0,0},{0,0,10,10}, 400.f);
 
     SetTargetFPS(60);
     while(!WindowShouldClose()){
@@ -34,12 +33,12 @@ int main(){
     
         DrawRectangle(Player->Pos.x, Player->Pos.y, Player->Rec.width, Player->Rec.height, RED);
 
-
-
-        //Player movement
-        MovePlayer(Player, dT);
         //Player shooting
         Player->Shoot(Proj, dT);
+
+        //Player movement
+        Player->Move(dT);
+        
         
         //mouse position TBD, need for shooting
         int x = GetMouseX();
@@ -63,7 +62,7 @@ int main(){
     return 0;
 }
 
-void MovePlayer(Character* player, float dT){
+/*void MovePlayer(Character* player, float dT){
     float velocity = 200;
     if(IsKeyDown(KEY_A)){
         player->Move({-200,0}, dT);
@@ -77,7 +76,7 @@ void MovePlayer(Character* player, float dT){
     if(IsKeyDown(KEY_S)){
         player->Move({0,velocity}, dT);
     }
-}
+}*/
 
 void WindowBorderTrigger(Window* mainWindow, Character* player){
     //Right border
